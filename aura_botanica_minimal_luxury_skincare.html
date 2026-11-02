@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA BOTANICA - Pure Skincare for Glowing Skin</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f4f6f4',
+                            100: '#e3e8e3',
+                            200: '#c8d3c8',
+                            600: '#6b7f6e',
+                            700: '#556658',
+                            800: '#465349',
+                        },
+                        cream: '#FDFBF7',
+                        beige: '#F5EFE6',
+                        charcoal: '#2C302E',
+                        sand: '#E8DFD8'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', '"Prompt"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: #FDFBF7;
+            color: #2C302E;
+            overflow-x: hidden;
+        }
+        .font-serif-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c8d3c8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-charcoal text-cream px-5 py-3 rounded-xl shadow-2xl opacity-0 translate-y-10 transition-all duration-300 pointer-events-none flex items-center gap-3 border border-sage-600/30">
+        <i class="fa-solid fa-circle-check text-sage-200"></i>
+        <span id="toast-message" class="text-sm font-medium">เพิ่มสินค้าลงตะกร้าแล้ว</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-sand/40 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-charcoal p-2 focus:outline-none" aria-label="Open Menu">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="#" class="font-serif-title text-2xl sm:text-3xl font-semibold tracking-widest text-charcoal hover:opacity-80 transition">
+                AURA BOTANICA
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider font-medium text-charcoal/80">
+                <a href="#hero" class="hover:text-sage-700 transition">หน้าแรก</a>
+                <a href="#bestsellers" class="hover:text-sage-700 transition">สินค้าขายดี</a>
+                <a href="#skin-quiz" class="hover:text-sage-700 transition">วิเคราะห์ผิว</a>
+                <a href="#about" class="hover:text-sage-700 transition">เกี่ยวกับเรา</a>
+                <a href="#contact" class="hover:text-sage-700 transition">ติดต่อ</a>
+            </nav>
+
+            <!-- Right Actions (Cart Button) -->
+            <div class="flex items-center gap-4">
+                <button id="cart-open-btn" class="relative p-2 text-charcoal hover:text-sage-700 transition" aria-label="Shopping Cart">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-sage-700 text-cream text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream border-b border-sand/50 px-6 py-4 space-y-3">
+            <a href="#hero" class="block py-2 text-charcoal/80 hover:text-sage-700 font-medium">หน้าแรก</a>
+            <a href="#bestsellers" class="block py-2 text-charcoal/80 hover:text-sage-700 font-medium">สินค้าขายดี</a>
+            <a href="#skin-quiz" class="block py-2 text-charcoal/80 hover:text-sage-700 font-medium">วิเคราะห์ผิว</a>
+            <a href="#about" class="block py-2 text-charcoal/80 hover:text-sage-700 font-medium">เกี่ยวกับเรา</a>
+            <a href="#contact" class="block py-2 text-charcoal/80 hover:text-sage-700 font-medium">ติดต่อ</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-[85vh] flex items-center bg-gradient-to-b from-cream via-beige/40 to-cream py-12 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left">
+                    <span class="inline-block text-xs uppercase tracking-widest text-sage-700 font-semibold bg-sage-100/60 px-4 py-1.5 rounded-full border border-sage-200">
+                        Organic & Botanical Formula
+                    </span>
+                    <h1 class="font-serif-title text-4xl sm:text-6xl lg:text-7xl font-normal leading-tight text-charcoal">
+                        Pure Skincare for <br class="hidden sm:block"/>
+                        <span class="italic font-serif-title text-sage-700">Glowing Skin</span>
+                    </h1>
+                    <p class="text-charcoal/70 text-base sm:text-lg max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+                        ปรนนิบัติผิวด้วยพลังบริสุทธิ์จากพฤกษาธรรมชาติ รังสรรค์อย่างพิถีพิถันเพื่อผิวบอบบางแพ้ง่าย ฟื้นฟูความสมดุลให้ผิวเปล่งปลั่งอย่างเป็นธรรมชาติ
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <a href="#bestsellers" class="bg-sage-700 hover:bg-sage-800 text-cream px-8 py-3.5 rounded-full font-medium transition text-center shadow-md hover:shadow-lg">
+                            ช้อปเลย (Shop Now)
+                        </a>
+                        <a href="#skin-quiz" class="bg-transparent border border-charcoal/30 hover:border-sage-700 text-charcoal hover:text-sage-700 px-8 py-3.5 rounded-full font-medium transition text-center">
+                            ทำแบบทดสอบผิว
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="relative flex justify-center">
+                    <div class="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/60">
+                        <img src="https://images.unsplash.com/photo-1608248597359-97e335f661a3?auto=format&fit=crop&w=900&q=80" alt="AURA BOTANICA Product" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brand Values -->
+        <section class="py-16 bg-white border-y border-sand/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="p-4 space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-sage-100 flex items-center justify-center text-sage-700 text-xl">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-base">100% Organic</h3>
+                        <p class="text-xs text-charcoal/60">สารสกัดบริสุทธิ์จากธรรมชาติ ไร้เคมีสะสม</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-sage-100 flex items-center justify-center text-sage-700 text-xl">
+                            <i class="fa-solid fa-flask"></i>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-base">Dermatologist Tested</h3>
+                        <p class="text-xs text-charcoal/60">ผ่านการทดสอบโดยแพทย์ผิวหนัง อ่อนโยนสูง</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-sage-100 flex items-center justify-center text-sage-700 text-xl">
+                            <i class="fa-solid fa-dove"></i>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-base">Cruelty-Free</h3>
+                        <p class="text-xs text-charcoal/60">ไม่มีการทดลองกับสัตว์ในทุกขั้นตอน</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-sage-100 flex items-center justify-center text-sage-700 text-xl">
+                            <i class="fa-solid fa-recycle"></i>
+                        </div>
+                        <h3 class="font-semibold text-charcoal text-base">Eco-Packaging</h3>
+                        <p class="text-xs text-charcoal/60">บรรจุภัณฑ์เป็นมิตรต่อสิ่งแวดล้อม</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Sellers Section -->
+        <section id="bestsellers" class="py-20 bg-cream">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-xl mx-auto mb-14">
+                    <span class="text-xs uppercase tracking-widest text-sage-700 font-medium">Curated Skincare</span>
+                    <h2 class="font-serif-title text-3xl sm:text-5xl font-normal text-charcoal mt-2">สินค้าขายดี (Best Sellers)</h2>
+                    <p class="text-sm text-charcoal/60 mt-3">ผลิตภัณฑ์ทรงคุณค่าที่ได้รับการตอบรับและชื่นชอบมากที่สุด</p>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Products rendered via Javascript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Skin Quiz Interactive Section -->
+        <section id="skin-quiz" class="py-20 bg-beige/50 border-y border-sand/40">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-cream rounded-3xl p-8 sm:p-12 shadow-lg border border-sand/60">
+                    <div class="text-center max-w-lg mx-auto mb-8">
+                        <span class="text-xs uppercase tracking-widest text-sage-700 font-semibold">Personalized Care</span>
+                        <h2 class="font-serif-title text-3xl sm:text-4xl font-normal text-charcoal mt-1">ควิซวิเคราะห์สภาพผิว</h2>
+                        <p class="text-sm text-charcoal/60 mt-2">ตอบคำถาม 2 ข้อสั้นๆ เพื่อค้นหาสกินแคร์ที่เหมาะกับผิวคุณที่สุด</p>
+                    </div>
+
+                    <!-- Quiz Form Box -->
+                    <div id="quiz-container" class="space-y-8">
+                        <!-- Step 1 -->
+                        <div id="quiz-step-1" class="space-y-4">
+                            <h3 class="text-base font-semibold text-charcoal text-center">1. สภาพผิวของคุณเป็นอย่างไรในปัจจุบัน?</h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <button onclick="selectQuizOption('skinType', 'dry')" class="quiz-btn-1 border border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <i class="fa-solid fa-droplet text-sage-600 text-lg mb-2 block"></i>
+                                    <span class="text-sm font-medium">ผิวแห้ง / ขาดน้ำ</span>
+                                </button>
+                                <button onclick="selectQuizOption('skinType', 'oily')" class="quiz-btn-1 border border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <i class="fa-solid fa-sun text-sage-600 text-lg mb-2 block"></i>
+                                    <span class="text-sm font-medium">ผิวมัน / หน้าเงา</span>
+                                </button>
+                                <button onclick="selectQuizOption('skinType', 'combination')" class="quiz-btn-1 border border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <i class="fa-solid fa-circle-half-stroke text-sage-600 text-lg mb-2 block"></i>
+                                    <span class="text-sm font-medium">ผิวผสม</span>
+                                </button>
+                                <button onclick="selectQuizOption('skinType', 'sensitive')" class="quiz-btn-1 border border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <i class="fa-solid fa-hand-holding-heart text-sage-600 text-lg mb-2 block"></i>
+                                    <span class="text-sm font-medium">ผิวแพ้ง่าย / แดงง่าย</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div id="quiz-step-2" class="space-y-4 hidden">
+                            <h3 class="text-base font-semibold text-charcoal text-center">2. อะไรคือปัญหาผิวหลักที่คุณกังวลที่สุด?</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <button onclick="selectQuizOption('concern', 'dullness')" class="quiz-btn-2 border border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <span class="text-sm font-medium">ผิวหมองคล้ำ ไม่สดใส</span>
+                                </button>
+                                <button onclick="selectQuizOption('concern', 'acne')" class="quiz-btn-2 border border-sand hover:border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <span class="text-sm font-medium">สิวและรูขุมขนกว้าง</span>
+                                </button>
+                                <button onclick="selectQuizOption('concern', 'aging')" class="quiz-btn-2 border border-sand hover:border-sage-700 bg-white p-4 rounded-2xl text-center transition hover:shadow-md">
+                                    <span class="text-sm font-medium">ริ้วรอยและความร่วงโรย</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Result -->
+                        <div id="quiz-result" class="hidden text-center space-y-6 pt-4">
+                            <div class="inline-block p-4 rounded-full bg-sage-100 text-sage-700 mb-2">
+                                <i class="fa-solid fa-sparkles text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif-title text-2xl text-charcoal">ผลิตภัณฑ์แนะนำสำหรับผิวคุณ</h3>
+                                <p class="text-xs text-charcoal/60 mt-1">สูตรเฉพาะที่ตอบโจทย์ความต้องการผิวของคุณโดยเฉพาะ</p>
+                            </div>
+                            <div id="recommended-product" class="max-w-sm mx-auto bg-white p-4 rounded-2xl border border-sand shadow-md">
+                                <!-- Recommended item JS Injection -->
+                            </div>
+                            <button onclick="resetQuiz()" class="text-xs text-sage-700 hover:underline font-medium">
+                                <i class="fa-solid fa-rotate-left mr-1"></i>ทำแบบทดสอบใหม่อีกครั้ง
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-cream">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative order-2 lg:order-1">
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80" alt="Botanical extracts" class="rounded-3xl shadow-xl w-full object-cover aspect-[4/3]">
+                </div>
+                <div class="space-y-6 order-1 lg:order-2">
+                    <span class="text-xs uppercase tracking-widest text-sage-700 font-semibold">Our Philosophy</span>
+                    <h2 class="font-serif-title text-3xl sm:text-5xl font-normal text-charcoal">ปรัชญาแห่งความงามบริสุทธิ์</h2>
+                    <p class="text-charcoal/70 leading-relaxed text-sm sm:text-base font-light">
+                        AURA BOTANICA ถือกำเนิดขึ้นจากความเชื่อที่ว่า "ผิวพรรณที่งดงามที่สุด คือผิวที่มีสุขภาพดีตามธรรมชาติ" เราเลือกสรรวัตถุดิบสมุนไพรและพฤกษานานาพรรณด้วยความใส่ใจ ปราศจากสารพาราเบน ซิลิโคน และน้ำหอมสังเคราะห์ เพื่อส่งมอบผลลัพธ์บริสุทธิ์ที่ปลอดภัยที่สุดแก่คุณ
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="py-16 bg-sage-800 text-cream">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+                <h2 class="font-serif-title text-3xl sm:text-4xl">รับส่วนลดพิเศษ 10% สำหรับคำสั่งซื้อแรก</h2>
+                <p class="text-cream/80 text-sm max-w-md mx-auto">ลงทะเบียนสมัครจดหมายข่าวเพื่อรับอัปเดตสกินแคร์ใหม่และข้อเสนอพิเศษเฉพาะคุณ</p>
+                <form onsubmit="handleSubscribe(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" required placeholder="ใส่อีเมลของคุณที่นี่..." class="bg-cream/10 border border-cream/20 text-cream placeholder-cream/50 px-5 py-3 rounded-full flex-1 focus:outline-none focus:border-cream text-sm">
+                    <button type="submit" class="bg-cream text-sage-800 hover:bg-beige font-medium px-8 py-3 rounded-full transition text-sm">
+                        รับส่วนลด
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Drawer Overlay & Panel -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-cream shadow-2xl transition-transform duration-300 transform translate-x-full flex flex-col justify-between">
+            
+            <!-- Cart Header -->
+            <div class="p-6 border-b border-sand/50 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <h3 class="font-serif-title text-2xl text-charcoal">ตะกร้าสินค้า</h3>
+                    <span id="cart-drawer-count" class="text-xs bg-sage-100 text-sage-700 font-bold px-2.5 py-1 rounded-full">0 ชิ้น</span>
+                </div>
+                <button id="cart-close-btn" class="text-charcoal/60 hover:text-charcoal p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cart-items" class="p-6 space-y-4 overflow-y-auto flex-1 custom-scrollbar">
+                <!-- Items populated by JS -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="p-6 border-t border-sand/50 bg-white/50 space-y-4">
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm text-charcoal/70">
+                        <span>ค่าจัดส่ง</span>
+                        <span class="text-sage-700 font-medium">ฟรีค่าจัดส่ง</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-semibold text-charcoal pt-2 border-t border-sand/30">
+                        <span>ราคารวมทั้งหมด</span>
+                        <span id="cart-total-price">฿0</span>
+                    </div>
+                </div>
+                <button onclick="checkout()" class="w-full bg-sage-700 hover:bg-sage-800 text-cream py-3.5 rounded-full font-medium transition text-center shadow-md">
+                    ดำเนินการสั่งซื้อ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-charcoal text-cream/70 py-12 border-t border-charcoal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-sm">
+            <div class="space-y-3">
+                <h4 class="font-serif-title text-2xl text-cream tracking-wider">AURA BOTANICA</h4>
+                <p class="text-xs leading-relaxed text-cream/60">นิยามใหม่แห่งการดูแลผิวพรรณอย่างยั่งยืน ด้วยสารสกัดพฤกษาธรรมชาติ 100%</p>
+            </div>
+            <div>
+                <h5 class="text-cream font-medium mb-3">เมนูหลัก</h5>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#hero" class="hover:text-cream transition">หน้าแรก</a></li>
+                    <li><a href="#bestsellers" class="hover:text-cream transition">สินค้าขายดี</a></li>
+                    <li><a href="#skin-quiz" class="hover:text-cream transition">วิเคราะห์สภาพผิว</a></li>
+                    <li><a href="#about" class="hover:text-cream transition">ปรัชญาแบรนด์</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-cream font-medium mb-3">บริการลูกค้า</h5>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" class="hover:text-cream transition">การจัดส่งและการคืนสินค้า</a></li>
+                    <li><a href="#" class="hover:text-cream transition">คำถามที่พบบ่อย (FAQ)</a></li>
+                    <li><a href="#" class="hover:text-cream transition">นโยบายความเป็นส่วนตัว</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-cream font-medium mb-3">ติดตามเรา</h5>
+                <div class="flex gap-4 text-lg">
+                    <a href="#" class="hover:text-sage-200 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-sage-200 transition"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-sage-200 transition"><i class="fa-brands fa-line"></i></a>
+                    <a href="#" class="hover:text-sage-200 transition"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 border-t border-white/10 text-center text-xs text-cream/40">
+            &copy; 2026 AURA BOTANICA. All Rights Reserved. Designed with Minimal Aesthetics.
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: 'Botanical Balance Face Oil',
+                category: 'Face Oil',
+                price: 1290,
+                image: 'https://images.unsplash.com/photo-1608248597359-97e335f661a3?auto=format&fit=crop&w=500&q=80',
+                skinType: 'dry',
+                concern: 'dullness'
+            },
+            {
+                id: 2,
+                name: 'Sage & Green Tea Cleansing Gel',
+                category: 'Cleanser',
+                price: 790,
+                image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=500&q=80',
+                skinType: 'oily',
+                concern: 'acne'
+            },
+            {
+                id: 3,
+                name: 'Radiance Renewal Serum',
+                category: 'Serum',
+                price: 1590,
+                image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=500&q=80',
+                skinType: 'sensitive',
+                concern: 'aging'
+            },
+            {
+                id: 4,
+                name: 'Hydrating Calming Cream',
+                category: 'Moisturizer',
+                price: 1190,
+                image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=500&q=80',
+                skinType: 'combination',
+                concern: 'dullness'
+            }
+        ];
+
+        // Cart State
+        let cart = [];
+        let quizAnswers = { skinType: '', concern: '' };
+
+        // DOM Loaded Init
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            setupCartEvents();
+            setupMobileMenu();
+        });
+
+        // Render Best Sellers
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map(product => `
+                <div class="group bg-white rounded-2xl overflow-hidden border border-sand/40 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div class="relative overflow-hidden aspect-square bg-beige/30">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 left-3 bg-cream/90 backdrop-blur-sm text-charcoal text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full">
+                            ${product.category}
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-serif-title text-xl text-charcoal font-normal group-hover:text-sage-700 transition">${product.name}</h3>
+                            <p class="text-sage-700 font-semibold text-base mt-1">฿${product.price.toLocaleString()}</p>
+                        </div>
+                        <button onclick="addToCart(${product.id})" class="w-full border border-sage-700 text-sage-700 hover:bg-sage-700 hover:text-cream py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition duration-200">
+                            เพิ่มลงตะกร้า
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cart Functionality
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`เพิ่ม "${product.name}" ลงตะกร้าแล้ว`);
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(p => p.id === productId);
+            if (!item) return;
+
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                cart = cart.filter(p => p.id !== productId);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Update Badge Counts
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('cart-drawer-count').textContent = `${totalItems} ชิ้น`;
+            document.getElementById('cart-total-price').textContent = `฿${totalPrice.toLocaleString()}`;
+
+            // Render Cart Items
+            const cartItemsContainer = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-charcoal/50 space-y-3">
+                        <i class="fa-solid fa-bag-shopping text-4xl text-sand"></i>
+                        <p class="text-sm">ไม่มีสินค้าในตะกร้าของคุณ</p>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-sand/40">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg bg-beige">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-medium text-charcoal line-clamp-1">${item.name}</h4>
+                            <p class="text-xs text-sage-700 font-semibold mt-0.5">฿${item.price.toLocaleString()}</p>
+                            <div class="flex items-center gap-3 mt-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-full bg-beige text-charcoal text-xs hover:bg-sand transition flex items-center justify-center">-</button>
+                                <span class="text-xs font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 rounded-full bg-beige text-charcoal text-xs hover:bg-sand transition flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Cart Drawer Handlers
+        function setupCartEvents() {
+            const openBtn = document.getElementById('cart-open-btn');
+            const closeBtn = document.getElementById('cart-close-btn');
+            const overlay = document.getElementById('cart-drawer-overlay');
+            const drawer = document.getElementById('cart-drawer');
+
+            function openCart() {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                drawer.classList.remove('translate-x-full');
+            }
+
+            function closeCart() {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                drawer.classList.add('translate-x-full');
+            }
+
+            openBtn.addEventListener('click', openCart);
+            closeBtn.addEventListener('click', closeCart);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeCart();
+            });
+        }
+
+        // Mobile Menu Handler
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
+
+        // Skin Quiz Logic
+        function selectQuizOption(category, value) {
+            quizAnswers[category] = value;
+
+            if (category === 'skinType') {
+                document.getElementById('quiz-step-1').classList.add('hidden');
+                document.getElementById('quiz-step-2').classList.remove('hidden');
+            } else if (category === 'concern') {
+                document.getElementById('quiz-step-2').classList.add('hidden');
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const resultBox = document.getElementById('quiz-result');
+            const recContainer = document.getElementById('recommended-product');
+            
+            // Match product based on skin type or fallback to first item
+            let matched = products.find(p => p.skinType === quizAnswers.skinType) || products[0];
+
+            recContainer.innerHTML = `
+                <div class="space-y-3 text-center">
+                    <img src="${matched.image}" alt="${matched.name}" class="w-32 h-32 object-cover rounded-xl mx-auto">
+                    <div>
+                        <h4 class="font-serif-title text-lg text-charcoal">${matched.name}</h4>
+                        <p class="text-xs text-sage-700 font-semibold mt-1">฿${matched.price.toLocaleString()}</p>
+                    </div>
+                    <button onclick="addToCart(${matched.id})" class="w-full bg-sage-700 text-cream py-2 rounded-full text-xs font-medium hover:bg-sage-800 transition">
+                        เพิ่มสินค้าแนะนำลงตะกร้า
+                    </button>
+                </div>
+            `;
+
+            resultBox.classList.remove('hidden');
+        }
+
+        function resetQuiz() {
+            quizAnswers = { skinType: '', concern: '' };
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-step-1').classList.remove('hidden');
+        }
+
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+
+            toast.classList.remove('opacity-0', 'translate-y-10');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        // Checkout Action Placeholder
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('ตะกร้าของคุณยังว่างเปล่า');
+                return;
+            }
+            showToast('กำลังนำคุณไปยังหน้าระบบชำระเงิน...');
+        }
+
+        // Newsletter Handler
+        function handleSubscribe(e) {
+            e.preventDefault();
+            showToast('ขอบคุณสำหรับการสมัครรับข่าวสาร!');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
